@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CharactersScreen extends StatefulWidget {
-  const CharactersScreen({Key? key}) : super(key: key);
+  
+  const CharactersScreen({super.key});
 
   @override
   State<CharactersScreen> createState() => _CharactersScreenState();
@@ -68,7 +69,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
         padding: EdgeInsets.zero,
         itemCount: allCharacters.length,
         itemBuilder: (context, index) {
-          return CharacterItem(character: allCharacters[index],);
+
+       return CharacterItem(character: allCharacters[index],);
         });
   }
 
