@@ -3,7 +3,7 @@ import 'package:breaking_bad/data/models/characters.dart';
 import 'package:flutter/material.dart';
 
 class CharacterItem extends StatelessWidget {
-  final Character character;
+  final Results character;
   const CharacterItem({super.key, required this.character});
 
   @override
@@ -23,7 +23,7 @@ class CharacterItem extends StatelessWidget {
           color: Colors.black54,
           alignment: Alignment.bottomCenter,
           child: Text(
-            character.name,
+            character.name ?? '',
             style: const TextStyle(
               height: 1.3,
               fontSize: 16,

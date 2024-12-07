@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CharactersScreen extends StatefulWidget {
-  
   const CharactersScreen({super.key});
 
   @override
@@ -14,12 +13,11 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-  late List<Character> allCharacters;
+  late CharacterModel allCharacters;
 
   @override
   void initState() {
     super.initState();
-    allCharacters =
         BlocProvider.of<CharactersCubit>(context).getAllCharacters();
   }
 
@@ -57,22 +55,56 @@ class _CharactersScreenState extends State<CharactersScreen> {
   }
 
   Widget buildCharactersList() {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 2 / 3,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
-        ),
-        shrinkWrap: true,
-       // physics: const ClampingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: allCharacters.length,
-        itemBuilder: (context, index) {
+    final List<Results> results =
+        allCharacters.results!.isNotEmpty ? (allCharacters.results ?? []) : [];
+    // return GridView.builder(
+    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 2,
+    //       childAspectRatio: 2 / 3,
+    //       crossAxisSpacing: 1,
+    //       mainAxisSpacing: 1,
+    //     ),
+    //     shrinkWrap: true,
+    //     // physics: const ClampingScrollPhysics(),
+    //     padding: EdgeInsets.zero,
+    //     itemCount: results.length,
+    //     itemBuilder: (context, index) {
+    //       return CharacterItem(
+    //         character: results[index],
+    //       );
+    //     });
 
-       return CharacterItem(character: allCharacters[index],);
-        });
+    if (results.isEmpty) {
+      // Show an error message if no results are available
+      return const Center(
+        child: Text(
+          'No characters available ',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: MyColors.myYellow,
+          ),
+        ),
+      );
+    }
+
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 2 / 3,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+      ),
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: allCharacters.results!.length,
+      itemBuilder: (context, index) {
+        return CharacterItem(character: allCharacters.results![index]); 
+      },
+    );
   }
+  
 
   @override
   Widget build(BuildContext context) {
